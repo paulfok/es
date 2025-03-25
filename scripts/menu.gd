@@ -1,26 +1,35 @@
 extends Control
 
-var menu_page = "open"
+var menu_page
 
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
+	hide_settings()
+	show_menu()
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	if Input.is_action_just_released("menu"):
+	if Input.is_action_just_pressed("menu"):
 		match menu_page:
 			"open":
 				hide_menu()
 			"closed":
 				show_menu()
-	pass
-	
+			"settings":
+				hide_settings()
+
 func show_menu():
-	get_tree().create_tween().set_trans(Tween.TRANS_CUBIC).tween_property(self, "modulate:a", 1, 1)
-	var menu_page = "open"
+	$"../World".get_tree().paused = true
+	show()
+	menu_page = "open"
 
 func hide_menu():
-	get_tree().create_tween().set_trans(Tween.TRANS_CUBIC).tween_property(self, "modulate:a", 0, 1)
-	var menu_page = "closed"
+	$"../World".get_tree().paused = false
+	hide()
+	menu_page = "closed"
+	
+func show_settings():
+	$Settings.show()
+	menu_page = "settings"
+
+func hide_settings():
+	$Settings.hide()
+	menu_page = "open"

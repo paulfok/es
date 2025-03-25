@@ -29,6 +29,7 @@ size = Vector2(1080, 1)
 size = Vector2(1920, 1)
 
 [node name="World" type="Node2D"]
+process_mode = 1
 script = ExtResource("1_036b0")
 
 [node name="Timer" type="Timer" parent="."]
@@ -102,5 +103,3 @@ shape = SubResource("RectangleShape2D_ig7tw")
 [node name="Bottom" type="CollisionShape2D" parent="StaticBody2D3"]
 position = Vector2(0, 540)
 shape = SubResource("RectangleShape2D_ig7tw")
-
-[node name="Camera2D" type="Camera2D" parent="."]

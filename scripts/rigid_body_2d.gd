@@ -5,7 +5,7 @@ var speed
 var id
 var jumping_freq
 var jump_height
-var food = 0
+var food = 1
 var dying = false
 
 func _ready() -> void:
@@ -20,17 +20,14 @@ func _ready() -> void:
 		id = 0
 		food = 10
 		speed = 0
-		jumping_freq = 5000
-		jump_height = 0
+		jumping_freq = 2500
+		jump_height = -250
 
 	jumping_freq += randi_range(-1000, 1000)
 	$JumpTimer.wait_time = float(abs(jumping_freq)) / 1000
 		
 	jump_height += randi_range(-500, 500)
 	jump_height = abs(jump_height) * -1
-	
-	print(jump_height)
-	print(jumping_freq)
 
 	speed += randi_range(-500, 500)
 	constant_force.x = speed
@@ -54,7 +51,7 @@ func _on_body_entered(body) -> void:
 		
 
 func _on_main_timer_timeout():
-	if food >= 1:
+	if food >= 2:
 		food -= 1
 		var child = self.duplicate()
 		child.position.y = 0
@@ -64,8 +61,10 @@ func _on_main_timer_timeout():
 		child.jumping_freq = jumping_freq
 		$"..".highest_id += 1
 		child.id = $"..".highest_id
-		$"../".add_child(child)
-	elif dying == false:
+		add_sibling(child)
+	elif food >= 1:
+		food -= 1
+	elif dying == false and food < 1:
 		get_tree().create_tween().set_trans(Tween.TRANS_CUBIC).tween_property(self, "modulate:a", 0, 1)
 		dying = true
 		$CollisionShape2D.queue_free()
