@@ -1,0 +1,56 @@
+[gd_scene load_steps=7 format=3 uid="uid://b66482bk3dpwd"]
+
+[ext_resource type="Script" uid="uid://bxqsbxnuo82aq" path="res://world.gd" id="1_0xm2m"]
+[ext_resource type="Script" uid="uid://uoxae35gr7ke" path="res://rigid_body_2d.gd" id="1_ig7tw"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_0xm2m"]
+size = Vector2(100, 100)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_h2yge"]
+size = Vector2(100, 100)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ig7tw"]
+size = Vector2(1920, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0xm2m"]
+size = Vector2(1080, 1)
+
+[node name="Main" type="Node2D"]
+
+[node name="World" type="Node2D" parent="."]
+script = ExtResource("1_0xm2m")
+
+[node name="Timer" type="Timer" parent="World"]
+wait_time = 5.0
+autostart = true
+
+[node name="RigidBody2D" type="RigidBody2D" parent="World"]
+script = ExtResource("1_ig7tw")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="World/RigidBody2D"]
+mesh = SubResource("QuadMesh_0xm2m")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/RigidBody2D"]
+shape = SubResource("RectangleShape2D_h2yge")
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="World"]
+
+[node name="Top" type="CollisionShape2D" parent="World/StaticBody2D2"]
+position = Vector2(0, -540)
+shape = SubResource("RectangleShape2D_ig7tw")
+
+[node name="Bottom" type="CollisionShape2D" parent="World/StaticBody2D2"]
+position = Vector2(0, 540)
+shape = SubResource("RectangleShape2D_ig7tw")
+
+[node name="Left" type="CollisionShape2D" parent="World/StaticBody2D2"]
+position = Vector2(-960, 0)
+rotation = 1.5708
+shape = SubResource("RectangleShape2D_0xm2m")
+
+[node name="Right" type="CollisionShape2D" parent="World/StaticBody2D2"]
+position = Vector2(960, 0)
+rotation = 1.5708
+shape = SubResource("RectangleShape2D_0xm2m")
+
+[node name="Camera2D" type="Camera2D" parent="World"]
