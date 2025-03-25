@@ -1,13 +1,25 @@
-[gd_scene load_steps=7 format=3 uid="uid://b66482bk3dpwd"]
+[gd_scene load_steps=12 format=3 uid="uid://b66482bk3dpwd"]
 
 [ext_resource type="Script" uid="uid://bxqsbxnuo82aq" path="res://world.gd" id="1_0xm2m"]
 [ext_resource type="Script" uid="uid://uoxae35gr7ke" path="res://rigid_body_2d.gd" id="1_ig7tw"]
+[ext_resource type="Script" uid="uid://bvrwcqtpdlijn" path="res://food.gd" id="3_h2yge"]
+[ext_resource type="Script" uid="uid://6l2ailc7ltar" path="res://static_body_2d_2.gd" id="4_1bvp3"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_0xm2m"]
+friction = 0.2
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_h2yge"]
+size = Vector2(100, 100)
 
 [sub_resource type="QuadMesh" id="QuadMesh_0xm2m"]
 size = Vector2(100, 100)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_h2yge"]
-size = Vector2(100, 100)
+[sub_resource type="CircleShape2D" id="CircleShape2D_h2yge"]
+radius = 50.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_h2yge"]
+radius = 50.0
+height = 100.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ig7tw"]
 size = Vector2(1920, 1)
@@ -25,15 +37,47 @@ wait_time = 5.0
 autostart = true
 
 [node name="RigidBody2D" type="RigidBody2D" parent="World"]
+physics_material_override = SubResource("PhysicsMaterial_0xm2m")
 script = ExtResource("1_ig7tw")
-
-[node name="MeshInstance2D" type="MeshInstance2D" parent="World/RigidBody2D"]
-mesh = SubResource("QuadMesh_0xm2m")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World/RigidBody2D"]
 shape = SubResource("RectangleShape2D_h2yge")
 
+[node name="MeshInstance2D" type="MeshInstance2D" parent="World/RigidBody2D"]
+modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0, 0, 0, 1)
+mesh = SubResource("QuadMesh_0xm2m")
+
+[node name="Label" type="Label" parent="World/RigidBody2D"]
+modulate = Color(0.501407, 0.501406, 0.501406, 1)
+offset_left = -50.0
+offset_top = -50.0
+offset_right = 50.0
+offset_bottom = 50.0
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Timer" type="Timer" parent="World/RigidBody2D"]
+one_shot = true
+
+[node name="Food" type="RigidBody2D" parent="World"]
+process_priority = -1
+position = Vector2(0, -600)
+physics_material_override = SubResource("PhysicsMaterial_0xm2m")
+script = ExtResource("3_h2yge")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Food"]
+shape = SubResource("CircleShape2D_h2yge")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="World/Food"]
+modulate = Color(0.67451, 0, 0, 1)
+mesh = SubResource("SphereMesh_h2yge")
+
+[node name="Timer" type="Timer" parent="World/Food"]
+one_shot = true
+
 [node name="StaticBody2D2" type="StaticBody2D" parent="World"]
+script = ExtResource("4_1bvp3")
 
 [node name="Top" type="CollisionShape2D" parent="World/StaticBody2D2"]
 position = Vector2(0, -540)
