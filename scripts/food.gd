@@ -4,7 +4,7 @@ var type = "food"
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	if name == "Food":
+	if not name == "Food":
 		$CollisionShape2D.disabled = false
 		gravity_scale = 1
 		
