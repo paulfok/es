@@ -10,12 +10,9 @@ func _ready() -> void:
 func _on_timer_timeout():
 	for i in food_per_round:
 		spawn_food()
-		print(i)
+
 func spawn_food():
 	var food = $Food0.duplicate()
 	food.position.y = -500
 	food.position.x = randi_range(-960,960)
 	add_child(food)
-
-#func _process(delta: float) -> void:
-	#pass
