@@ -1,12 +1,13 @@
-[gd_scene load_steps=12 format=3 uid="uid://b66482bk3dpwd"]
+[gd_scene load_steps=13 format=3 uid="uid://b66482bk3dpwd"]
 
 [ext_resource type="Script" uid="uid://bxqsbxnuo82aq" path="res://world.gd" id="1_0xm2m"]
 [ext_resource type="Script" uid="uid://uoxae35gr7ke" path="res://rigid_body_2d.gd" id="1_ig7tw"]
 [ext_resource type="Script" uid="uid://bvrwcqtpdlijn" path="res://food.gd" id="3_h2yge"]
-[ext_resource type="Script" uid="uid://6l2ailc7ltar" path="res://static_body_2d_2.gd" id="4_1bvp3"]
+[ext_resource type="Script" uid="uid://6l2ailc7ltar" path="res://walls.gd" id="4_1bvp3"]
+[ext_resource type="Script" uid="uid://dqppnrtgyuvwp" path="res://static_body_2d_3.gd" id="5_lquwl"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_0xm2m"]
-friction = 0.2
+friction = 0.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h2yge"]
 size = Vector2(100, 100)
@@ -15,17 +16,17 @@ size = Vector2(100, 100)
 size = Vector2(100, 100)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_h2yge"]
-radius = 50.0
+radius = 25.0
 
 [sub_resource type="SphereMesh" id="SphereMesh_h2yge"]
-radius = 50.0
-height = 100.0
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ig7tw"]
-size = Vector2(1920, 1)
+radius = 25.0
+height = 50.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0xm2m"]
 size = Vector2(1080, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ig7tw"]
+size = Vector2(1920, 1)
 
 [node name="Main" type="Node2D"]
 
@@ -76,25 +77,28 @@ mesh = SubResource("SphereMesh_h2yge")
 [node name="Timer" type="Timer" parent="World/Food"]
 one_shot = true
 
-[node name="StaticBody2D2" type="StaticBody2D" parent="World"]
+[node name="Walls" type="StaticBody2D" parent="World"]
 script = ExtResource("4_1bvp3")
 
-[node name="Top" type="CollisionShape2D" parent="World/StaticBody2D2"]
-position = Vector2(0, -540)
-shape = SubResource("RectangleShape2D_ig7tw")
-
-[node name="Bottom" type="CollisionShape2D" parent="World/StaticBody2D2"]
-position = Vector2(0, 540)
-shape = SubResource("RectangleShape2D_ig7tw")
-
-[node name="Left" type="CollisionShape2D" parent="World/StaticBody2D2"]
+[node name="Left" type="CollisionShape2D" parent="World/Walls"]
 position = Vector2(-960, 0)
 rotation = 1.5708
 shape = SubResource("RectangleShape2D_0xm2m")
 
-[node name="Right" type="CollisionShape2D" parent="World/StaticBody2D2"]
+[node name="Right" type="CollisionShape2D" parent="World/Walls"]
 position = Vector2(960, 0)
 rotation = 1.5708
 shape = SubResource("RectangleShape2D_0xm2m")
+
+[node name="StaticBody2D3" type="StaticBody2D" parent="World"]
+script = ExtResource("5_lquwl")
+
+[node name="Top" type="CollisionShape2D" parent="World/StaticBody2D3"]
+position = Vector2(0, -540)
+shape = SubResource("RectangleShape2D_ig7tw")
+
+[node name="Bottom" type="CollisionShape2D" parent="World/StaticBody2D3"]
+position = Vector2(0, 540)
+shape = SubResource("RectangleShape2D_ig7tw")
 
 [node name="Camera2D" type="Camera2D" parent="World"]

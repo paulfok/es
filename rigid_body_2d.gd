@@ -24,11 +24,17 @@ func _ready() -> void:
 	constant_force.x = speed
 	self.modulate.a = 0
 	get_tree().create_tween().set_trans(Tween.TRANS_CUBIC).tween_property(self, "modulate:a", 1, 1)
-	$Label.text = "ID: " + str(id) + "\nSpeed: " + str(speed)
+	$Label.text = "ID: " + str(id) + "\nSpeed: " + str(speed) + "\nFood: " + str(food)
 
 func _on_body_entered(body) -> void:
 	if body.type == "food":
 		food += 1
+		$Label.text = "ID: " + str(id) + "\nSpeed: " + str(speed) + "\nFood: " + str(food)
+	elif body.type == "wall" or body.type == "square" and abs(body.position.y - position.y) < 75:
+		speed *= -1
+		constant_force.x = speed
+		$Label.text = "ID: " + str(id) + "\nSpeed: " + str(speed) + "\nFood: " + str(food)
+		
 
 func _on_main_timer_timeout():
 	if food >= 1:
@@ -43,11 +49,8 @@ func _on_main_timer_timeout():
 	elif dying == false:
 		get_tree().create_tween().set_trans(Tween.TRANS_CUBIC).tween_property(self, "modulate:a", 0, 1)
 		dying = true
+		$CollisionShape2D.queue_free()
 		$Timer.start()
 		
 func _on_timer_timeout():
 	queue_free()
-
-#func _process(delta: float) -> void:
-	#pass
-	

@@ -25,6 +25,7 @@ func _on_body_entered(body) -> void:
 	if body.type == "square":
 		get_tree().create_tween().set_trans(Tween.TRANS_CUBIC).tween_property(self, "modulate:a", 0, 1)
 		$Timer.start()
+		$CollisionShape2D.queue_free()
 		type = "fading_food"
 
 func _on_timer_timeout():
