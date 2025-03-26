@@ -68,6 +68,7 @@ func _on_main_timer_timeout():
 		get_tree().create_tween().set_trans(Tween.TRANS_CUBIC).tween_property(self, "modulate:a", 0, 1)
 		dying = true
 		$CollisionShape2D.queue_free()
+		z_index = 1
 		$Timer.start()
 		
 func _on_timer_timeout():
